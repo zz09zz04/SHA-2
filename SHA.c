@@ -96,13 +96,9 @@ MessagePreprocess32Bit (
   NewString = malloc ((StringLen + 2) * sizeof(char));
   NewStringLen = StringLen + 1;
   strcpy(NewString, String);
-  Print ("debug\n");
   NewString[StringLen] = 0x80;
-  Print ("debug\n");
   NewString[StringLen+1] = '\0';
-  Print ("debug\n");
   Print ("NewString: %s\n", NewString);
-  Print ("debug\n");
 
   NumberOfZeroByte = 64 - (StringLen + 1 + 8) % 64; 
 
@@ -190,13 +186,10 @@ MessagePreprocess64Bit (
   NewString = malloc ((StringLen + 2) * sizeof(char));
   NewStringLen = StringLen + 1;
   strcpy(NewString, String);
-  Print ("debug\n");
+  Print ("DataUnit: %lld\n", DataUnit);
   NewString[StringLen] = 0x80;
-  Print ("debug\n");
   NewString[StringLen+1] = '\0';
-  Print ("debug\n");
   Print ("NewString: %s\n", NewString);
-  Print ("debug\n");
 
   NumberOfZeroByte = 128 - (StringLen + 1 + 8) % 128; 
 
@@ -214,7 +207,7 @@ MessagePreprocess64Bit (
     (*Data)[i] = (uint64_t)NewString[DataUnit * i] << 56 |
                  (uint64_t)NewString[DataUnit * i + 1] << 48 |
                  (uint64_t)NewString[DataUnit * i + 2] << 40 |
-                 (uint64_t)NewString[DataUnit * i + 3] << 32 |
+                 (uint64_t)NewString[DataUnit * i + 3] << 32 |
                  NewString[DataUnit * i + 4] << 24 |
                  NewString[DataUnit * i + 5] << 16 |
                  NewString[DataUnit * i + 6] << 8 |
@@ -387,6 +380,7 @@ HashComputation64Bit (
       s1 = RightRotate64Bit(w[i-2], 19) ^ RightRotate64Bit(w[i-2], 61) ^ (w[i-2] >> 6);
       w[i] = w[i-16] + s0 + w[i-7] + s1;
     }
+  Print ("debug\n");
 
     uint64_t a = H_64[0];
     uint64_t b = H_64[1];
